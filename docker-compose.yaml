@@ -1,0 +1,20 @@
+services:
+  smartwallet:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: final
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=${NODE_ENV}
+
+  mongodb:
+    image: mongodb/mongodb-community-server:latest
+    container_name: mongodb
+    restart: always
+    ports:
+      - "27017:27017"
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=${DB_USER}
+      - MONGO_INITDB_ROOT_PASSWORD=${DB_PASSWORD}

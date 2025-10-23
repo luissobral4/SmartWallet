@@ -1,0 +1,30 @@
+{
+  "name": "smartwallet",
+  "version": "1.0.0",
+  "description": "Smart wallet to help you plan the future.",
+  "main": "server.js",
+  "scripts": {
+    "start:dev": "NODE_ENV=development nodemon server.js",
+    "start:prod": "NODE_ENV=production node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/luissobral4/SmartWallet.git"
+  },
+  "author": "Luís Sobral",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/luissobral4/SmartWallet/issues"
+  },
+  "homepage": "https://github.com/luissobral4/SmartWallet#readme",
+  "devDependencies": {
+    "eslint": "^9.38.0",
+    "nodemon": "^3.1.10"
+  },
+  "dependencies": {
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0",
+    "mongoose": "^8.19.2"
+  }
+}
