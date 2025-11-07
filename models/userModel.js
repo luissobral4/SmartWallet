@@ -3,7 +3,7 @@ const validate = require('validator');
 const bcrypt = require('bcryptjs');
 const { schemaFactoryWithName } = require('./helpers/modelFactory');
 const validationMessages = require('../utils/validationMessages');
-const { USER_MODEL } = require('../constants/models');
+const { USER_MODEL, WALLET_MODEL } = require('../constants/models');
 const { USER_ROLE } = require('../constants/enums');
 const { USER_FIELDS } = require('../constants/fields');
 const { USER_LIMITS } = require('../constants/limits');
@@ -16,7 +16,7 @@ const userSchema = schemaFactoryWithName(
             required: [true, validationMessages.requiredMessage(USER_MODEL, USER_FIELDS.EMAIL)],
             unique: true,
             lowercase: true,
-            validate: [validate.isEmail, validationMessages.provideValidEmailMessage]
+            validate: [validate.isEmail, validationMessages.provideValidMessage(USER_FIELDS.EMAIL)]
         },
         age: {
             type: Number,
@@ -52,6 +52,11 @@ const userSchema = schemaFactoryWithName(
                 },
                 message: validationMessages.passwordMismatchMessage
             }
+        },
+        wallet: {
+            type: mongoose.Schema.ObjectId,
+            ref: WALLET_MODEL,
+            required: [true, validationMessages.mustBelongMessage(USER_MODEL, WALLET_MODEL)]
         },
         password_changed_at: Date,
         password_reset_token: String,

@@ -11,6 +11,7 @@ const COMMON_DETAILS_FIELDS = {
 }
 
 const USER_FIELDS = {
+    WALLET: 'wallet',
     EMAIL: 'email',
     AGE: 'age',
     PHOTO: 'photo',
