@@ -1,11 +1,7 @@
 const mongoose = require('mongoose');
-const schemaFactoryWithDetails = require('./modelFactory');
+const schemaFactoryWithWalletDetails = require('./helpers/modelFactory');
 
-const assetPositionSchema = new schemaFactoryWithDetails({
-    total_funds: {
-        type: Number,
-        required: [true, 'A transaction must have a purchase price.']
-    },
+const assetPositionSchema = new schemaFactoryWithWalletDetails({
     assets: [
         {
             type: mongoose.Schema.ObjectId,

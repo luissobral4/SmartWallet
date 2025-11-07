@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const validate = require('validator');
-const schemaFactoryWithName = require('./modelFactory');
+const schemaFactoryWithName = require('./helpers/modelFactory');
 
 const assetSchema = new schemaFactoryWithName({
     symbol: {

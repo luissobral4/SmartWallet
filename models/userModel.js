@@ -1,21 +1,24 @@
 const mongoose = require('mongoose');
 const validate = require('validator');
 const bcrypt = require('bcryptjs');
-const schemaFactoryWithName = require('./modelFactory');
+const schemaFactoryWithName = require('./helpers/modelFactory');
+const validationMessages = require('../utils/validationMessages');
+
+const object = 'user';
 
 const userSchema = new schemaFactoryWithName({
     email: {
         type: String,
-        required: [true, 'A user must have an email.'],
+        required: [true, validationMessages.requiredMessage(object, 'email')],
         unique: true,
         lowercase: true,
-        validate: [validate.isEmail, 'Please provide a valid email.']
+        validate: [validate.isEmail, validationMessages.provideValidEmailMessage]
     },
     age: {
         type: Number,
-        required: [true, 'A user must have an age.'],
-        min: [18, 'User must be at least 18 years old.'],
-        max: [100, 'User age must be below 100 years old.']
+        required: [true, validationMessages.requiredMessage(object, 'age')],
+        min: [18, validationMessages.minMessage(object, 'age', 18)],
+        max: [100, validationMessages.maxMessage(object, 'age', 100)]
     },
     photo: {
         type: String,
@@ -28,27 +31,27 @@ const userSchema = new schemaFactoryWithName({
     },
     password: {
         type: String,
-        required: [true, 'A user must have a password.'],
+        required: [true, validationMessages.requiredMessage(object, 'password')],
         minLength: [
             8,
-            'A user password must have more or equal than 8 characters.'
+            validationMessages.minLengthMessage(object, 'password', 8)
         ],
         select: false
     },
-    passwordConfirm: {
+    password_confirm: {
         type: String,
-        required: [true, 'A user must have a password.'],
+        required: [true, validationMessages.requiredMessage(object, 'password')],
         validate: {
             // This only works on CREATE and SAVE!
             validator: function (val) {
                 return val === this.password;
             },
-            message: 'Passwords are not the same.'
+            message: validationMessages.passwordMismatchMessage
         }
     },
-    passwordChangedAt: Date,
-    passwordResetToken: String,
-    passwordResetExpires: Date,
+    password_changed_at: Date,
+    password_reset_token: String,
+    password_reset_expires: Date,
     active: {
         type: Boolean,
         default: true,
@@ -60,14 +63,14 @@ userSchema.pre('save', async function (next) {
     if (!this.isModified('password')) return next();
 
     this.password = await bcrypt.hash(this.password, 12);
-    this.passwordConfirm = undefined;
+    this.password_confirm = undefined;
     next();
 });
 
 userSchema.pre('save', function (next) {
     if (!this.isModified('password') || this.isNew) return next();
 
-    this.passwordChangedAt = Date.now() - 1000;
+    this.password_changed_at = Date.now() - 1000;
     next();
 });
 
@@ -85,7 +88,7 @@ userSchema.methods.passwordCheck = async function (
 
 userSchema.methods.changedPasswordAfter = async function (jwtTimestamp) {
     if (this.passwordChangedAt) {
-        const changedTimestamp = parseInt(
+        const changedTimestamp = Number.parseInt(
             this.passwordChangedAt.getTime() / 1000,
             10
         );

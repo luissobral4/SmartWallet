@@ -1,31 +1,23 @@
 const mongoose = require('mongoose');
-const schemaFactory = require('./modelFactory');
+const schemaFactoryWithAssetDetails = require('./modelFactory');
+const validationMessages = require('../utils/validationMessages');
 
-const transactionSchema = new schemaFactory({
+const object = 'transaction';
+
+const transactionSchema = new schemaFactoryWithAssetDetails({
     user: {
         type: mongoose.Schema.ObjectId,
         ref: 'User',
-        required: [true, 'A transaction must belong to a user.']
+        required: [true, validationMessages.mustBelongMessage(object, 'user')]
     },
     asset: {
         type: mongoose.Schema.ObjectId,
         ref: 'Asset',
-        required: [true, 'A transaction must belong to an asset.']
+        required: [true, validationMessages.mustBelongMessage(object, 'asset')]
     },
-    purchase_price: {
-        type: Number,
-        required: [true, 'A transaction must have a purchase price.']
-    },
-    purchase_date: {
+    date: {
         type: Date,
-        required: [true, 'A transaction must have a purchase date.']
-    },
-    purchase_quantity: {
-        type: Number,
-        required: [true, 'A transaction must have a purchase quantity.']
-    },
-    purchase_amount: {
-        type: Number,
+        required: [true, validationMessages.requiredMessage(object, 'date')]
     }
 });
 
