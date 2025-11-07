@@ -37,5 +37,6 @@ const messageMustBelongBuilder = (object, field) => {
 module.exports = {
     messageLengthBuilder,
     messageMinMaxBuilder,
-    messageMustBelongBuilder
+    messageMustBelongBuilder,
+    messageRequiredBuilder
 };

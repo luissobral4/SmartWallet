@@ -1,26 +1,30 @@
 const mongoose = require('mongoose');
-const schemaFactoryWithAssetDetails = require('./modelFactory');
+const { schemaFactoryWithAssetDetails } = require('./helpers/modelFactory');
 const validationMessages = require('../utils/validationMessages');
+const { TRANSACTION_MODEL, ASSET_MODEL, USER_MODEL } = require('../constants/models');
+const { TRANSACTION_FIELDS } = require('../constants/fields');
 
-const object = 'transaction';
-
-const transactionSchema = new schemaFactoryWithAssetDetails({
-    user: {
-        type: mongoose.Schema.ObjectId,
-        ref: 'User',
-        required: [true, validationMessages.mustBelongMessage(object, 'user')]
-    },
-    asset: {
-        type: mongoose.Schema.ObjectId,
-        ref: 'Asset',
-        required: [true, validationMessages.mustBelongMessage(object, 'asset')]
-    },
-    date: {
-        type: Date,
-        required: [true, validationMessages.requiredMessage(object, 'date')]
+const transactionSchema = schemaFactoryWithAssetDetails(
+    TRANSACTION_MODEL,
+    {
+        user: {
+            type: mongoose.Schema.ObjectId,
+            ref: USER_MODEL,
+            required: [true, validationMessages.mustBelongMessage(TRANSACTION_MODEL, USER_MODEL)]
+        },
+        asset: {
+            type: mongoose.Schema.ObjectId,
+            ref: ASSET_MODEL,
+            required: [true, validationMessages.mustBelongMessage(TRANSACTION_MODEL, ASSET_MODEL)]
+        },
+        date: {
+            type: Date,
+            required: [true, validationMessages.requiredMessage(TRANSACTION_MODEL, TRANSACTION_FIELDS.DATE)]
+        }
+        // type!! (BUY/SELL)
     }
-});
+);
 
-const Transaction = mongoose.model('Transaction', transactionSchema);
+const Transaction = mongoose.model(TRANSACTION_MODEL, transactionSchema);
 
 module.exports = Transaction;

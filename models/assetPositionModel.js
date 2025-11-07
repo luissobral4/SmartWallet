@@ -1,27 +1,25 @@
 const mongoose = require('mongoose');
-const schemaFactoryWithAssetDetails = require('./modelFactory');
+const { schemaFactoryWithAssetDetails } = require('./helpers/modelFactory');
 const validationMessages = require('../utils/validationMessages');
+const { ASSET_POSITION_MODEL, ASSET_MODEL, TRANSACTION_MODEL } = require('../constants/models');
 
-
-const object = 'assetPosition';
-
-const assetPositionSchema = new schemaFactoryWithAssetDetails(
-    object,
+const assetPositionSchema = schemaFactoryWithAssetDetails(
+    ASSET_POSITION_MODEL,
     {
         asset: {
             type: mongoose.Schema.ObjectId,
-            ref: 'Asset',
-            required: [true, validationMessages.mustBelongMessage(object, 'asset')]
+            ref: ASSET_MODEL,
+            required: [true, validationMessages.mustBelongMessage(ASSET_POSITION_MODEL, ASSET_MODEL)]
         },
         transactions: [
             {
                 type: mongoose.Schema.ObjectId,
-                ref: 'Transaction'
+                ref: TRANSACTION_MODEL
             }
         ]
     }
 );
 
-const AssetPosition = mongoose.model('AssetPosition', assetPositionSchema);
+const AssetPosition = mongoose.model(ASSET_POSITION_MODEL, assetPositionSchema);
 
 module.exports = AssetPosition;

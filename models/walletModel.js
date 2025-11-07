@@ -1,15 +1,19 @@
 const mongoose = require('mongoose');
-const schemaFactoryWithWalletDetails = require('./helpers/modelFactory');
+const { schemaFactoryWithWalletDetails } = require('./helpers/modelFactory');
+const { WALLET_MODEL, ASSET_POSITION_MODEL} = require('../constants/models');
 
-const assetPositionSchema = new schemaFactoryWithWalletDetails({
-    assets: [
-        {
-            type: mongoose.Schema.ObjectId,
-            ref: 'AssetPosition'
-        }
-    ]
-});
+const WalletSchema = schemaFactoryWithWalletDetails(
+    WALLET_MODEL,
+    {
+        assets: [
+            {
+                type: mongoose.Schema.ObjectId,
+                ref: ASSET_POSITION_MODEL
+            }
+        ]
+    }
+);
 
-const AssetPosition = mongoose.model('AssetPosition', assetPositionSchema);
+const Wallet = mongoose.model(WALLET_MODEL, WalletSchema);
 
-module.exports = AssetPosition;
+module.exports = Wallet;

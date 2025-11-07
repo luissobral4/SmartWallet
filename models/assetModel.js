@@ -1,53 +1,60 @@
 const mongoose = require('mongoose');
 const validate = require('validator');
-const schemaFactoryWithName = require('./helpers/modelFactory');
+const { schemaFactoryWithName } = require('./helpers/modelFactory');
+const { requiredMessage, provideValidMessage } = require('../utils/validationMessages');
+const { ASSET_MODEL } = require('../constants/models');
+const { AssetGroup, AssetType } = require('../constants/enums');
+const { ASSET_FIELDS } = require('../constants/fields');
 
-const assetSchema = new schemaFactoryWithName({
-    symbol: {
-        type: String,
-        required: [true, 'An asset must have a symbol.'],
-        unique: true,
-        uppercase: true
-    },
-    ussuer: {
-        type: String
-    },
-    currency: {
-        type: String,
-        required: [true, 'An asset must have a currency.'],
-        validate: [validate.isCurrency, 'Please provide a valid currency.']
-    },
-    group: {
-        type: String,
-        required: [true, 'An asset must have a group.'],
-        enum: ['stock', 'etf', 'crypto', 'fund', 'cash', 'bond', 'treasury certificate','other'],
-    },
-    type: {
-        type: String,
-        required: [true, 'An asset must have a type.'],
-        enum: ['equity', 'fixed income', 'cash', 'real estate'],
-    },
-    prices: {
-        type: Map,
-        of: Number,
-        required: [true, 'An asset must have prices.'],
-        validate: {
-            validator: function (val) {
-                for (let [key, value] of val) {
-                    if (!validate.isDate(key, {})) {
-                        return false;
+const assetSchema = schemaFactoryWithName(
+    ASSET_MODEL,
+    {
+        symbol: {
+            type: String,
+            required: [true, requiredMessage(ASSET_MODEL, ASSET_FIELDS.SYMBOL)],
+            unique: true,
+            uppercase: true
+        },
+        issuer: {
+            type: String
+        },
+        currency: {
+            type: String,
+            required: [true, requiredMessage(ASSET_MODEL, ASSET_FIELDS.CURRENCY)],
+            validate: [validate.isCurrency, provideValidMessage(ASSET_FIELDS.CURRENCY)]
+        },
+        group: {
+            type: String,
+            required: [true, requiredMessage(ASSET_MODEL, ASSET_FIELDS.GROUP)],
+            enum: AssetGroup,
+        },
+        type: {
+            type: String,
+            required: [true, requiredMessage(ASSET_MODEL, ASSET_FIELDS.TYPE)],
+            enum: AssetType,
+        },
+        price_history: {
+            type: Map,
+            of: Number,
+            required: [true, requiredMessage(ASSET_MODEL, ASSET_FIELDS.PRICE_HISTORY)],
+            validate: {
+                validator: function (val) {
+                    for (let [key] of val) {
+                        if (!validate.isDate(key, {})) {
+                            return false;
+                        }
                     }
-                }
-            },
-            message: 'Please provide valid dates as keys for prices.'
+                },
+                message: provideValidMessage('dates in price history')
+            }
+        },
+        metadata: {
+            type: Map,
+            of: String
         }
-    },
-    metadata: {
-        type: Map,
-        of: String
     }
-});
+);
 
-const Asset = mongoose.model('Asset', assetSchema);
+const Asset = mongoose.model(ASSET_MODEL, assetSchema);
 
 module.exports = Asset;

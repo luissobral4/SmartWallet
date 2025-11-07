@@ -1,7 +1,7 @@
 const messageHelpers = require("./messageHelpers");
 
 const requiredMessage = (object, field) => {
-    return messageHelpers.messageMustBelongBuilder(object, field);
+    return messageHelpers.messageRequiredBuilder(object, field);
 }
 
 const minMessage = (object, field, value) => {
@@ -26,7 +26,7 @@ const mustBelongMessage = (object, field) => {
 
 const passwordMismatchMessage = 'Passwords are not the same.';
 
-const provideValidEmailMessage = 'Please provide a valid email.';
+const provideValidMessage = (field) => `Please provide a valid ${field}.`;
 
 module.exports = {
     mustBelongMessage,
@@ -36,5 +36,5 @@ module.exports = {
     minLengthMessage,
     maxLengthMessage,
     passwordMismatchMessage,
-    provideValidEmailMessage
+    provideValidMessage
 };
