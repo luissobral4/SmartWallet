@@ -4,10 +4,15 @@ const COMMON_NAME_FIELD = {
 
 const COMMON_DETAILS_FIELDS = {
     VOLUME: 'volume',
-    VALUE: 'value',
-    ACTUAL_MARKET_VALUE: 'actual_market_value',
+    NOMINAL_VALUE: 'nominal_value',
+    MARKET_VALUE: 'market_value',
     PROFIT: 'profit',
     PROFIT_PERCENTAGE: 'profit_percentage'
+}
+
+const PRICE_FIELDS = {
+    OPEN_PRICE: 'open_price',
+    MARKET_PRICE: 'market_price',
 }
 
 const USER_FIELDS = {
@@ -36,6 +41,7 @@ const ASSET_FIELDS = {
 const ASSET_POSITION_FIELDS = {
     ASSET: 'asset',
     TRANSACTIONS: 'transactions',
+    ...PRICE_FIELDS,
     ...COMMON_DETAILS_FIELDS
 }
 
@@ -44,6 +50,7 @@ const TRANSACTION_FIELDS = {
     ASSET: 'asset',
     DATE: 'date',
     //TYPE: 'type',
+    ...PRICE_FIELDS,
     ...COMMON_DETAILS_FIELDS
 }
 
@@ -59,5 +66,6 @@ module.exports = {
     TRANSACTION_FIELDS,
     WALLET_FIELDS,
     COMMON_DETAILS_FIELDS,
-    COMMON_NAME_FIELD
+    COMMON_NAME_FIELD,
+    PRICE_FIELDS
 };

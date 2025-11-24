@@ -9,16 +9,22 @@ const COMMON_LIMITS = {
   PROFIT_PERCENTAGE: {
     DEFAULT: 0
   },
-  VALUE: {
+  NOMINAL_VALUE: {
     MIN: 0
   },
-  ACTUAL_MARKET_VALUE: {
+  MARKET_VALUE: {
     MIN: 0,
     DEFAULT: 0
   },
   VOLUME: {
     MIN: 0
-  }
+  },
+  OPEN_PRICE: {
+    MIN: 0
+  },
+  MARKET_PRICE: {
+    MIN: 0
+  },
 };
 
 const USER_LIMITS = {

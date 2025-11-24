@@ -1,4 +1,4 @@
-const { COMMON_NAME_FIELD, COMMON_DETAILS_FIELDS } = require('../../constants/fields');
+const { COMMON_NAME_FIELD, COMMON_DETAILS_FIELDS, PRICE_FIELDS } = require('../../constants/fields');
 const { COMMON_LIMITS } = require('../../constants/limits');
 const validationMessages = require('../../utils/validationMessages');
 
@@ -32,20 +32,41 @@ const profitDefinitions = {
 
 const valueDefinitions = (model) => {
     return {
-        value: {
+        nominal_value: {
             type: Number,
-            required: [true, validationMessages.requiredMessage(model, COMMON_DETAILS_FIELDS.VALUE)],
+            required: [true, validationMessages.requiredMessage(model, COMMON_DETAILS_FIELDS.NOMINAL_VALUE)],
             min: [
-                COMMON_LIMITS.VALUE.MIN,
-                validationMessages.minMessage(model, COMMON_DETAILS_FIELDS.VALUE, COMMON_LIMITS.VALUE.MIN)
+                COMMON_LIMITS.NOMINAL_VALUE.MIN,
+                validationMessages.minMessage(model, COMMON_DETAILS_FIELDS.NOMINAL_VALUE, COMMON_LIMITS.NOMINAL_VALUE.MIN)
             ]
         },
-        actual_market_value: {
+        market_value: {
             type: Number,
-            default: COMMON_LIMITS.ACTUAL_MARKET_VALUE.DEFAULT,
+            default: COMMON_LIMITS.MARKET_VALUE.DEFAULT,
             min: [
-                COMMON_LIMITS.ACTUAL_MARKET_VALUE.MIN,
-                validationMessages.minMessage(model, COMMON_DETAILS_FIELDS.ACTUAL_MARKET_VALUE, COMMON_LIMITS.ACTUAL_MARKET_VALUE.MIN)
+                COMMON_LIMITS.MARKET_VALUE.MIN,
+                validationMessages.minMessage(model, COMMON_DETAILS_FIELDS.MARKET_VALUE, COMMON_LIMITS.MARKET_VALUE.MIN)
+            ]
+        }
+    }
+};
+
+const priceDefinitions = (model) => {
+    return {
+        open_price: {
+            type: Number,
+            required: [true, validationMessages.requiredMessage(model, PRICE_FIELDS.OPEN_PRICE)],
+            min: [
+                COMMON_LIMITS.OPEN_PRICE.MIN,
+                validationMessages.minMessage(model, PRICE_FIELDS.OPEN_PRICE, COMMON_LIMITS.OPEN_PRICE.MIN)
+            ]
+        },
+        market_price: {
+            type: Number,
+            default: COMMON_LIMITS.ACTUAL_MARKET.DEFAULT,
+            min: [
+                COMMON_LIMITS.ACTUAL_MARKET.MIN,
+                validationMessages.minMessage(model, PRICE_FIELDS.ACTUAL_MARKET, COMMON_LIMITS.ACTUAL_MARKET.MIN)
             ]
         }
     }
@@ -68,6 +89,7 @@ const assetDetailsDefinitions = (model) => {
     return {
         ...volumeDefinition(model),
         ...valueDefinitions(model),
+        ...priceDefinitions(model),
         ...profitDefinitions
     }
 };
