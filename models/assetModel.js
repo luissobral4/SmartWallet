@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const validate = require('validator');
 const { schemaFactoryWithName } = require('./helpers/modelFactory');
-const { requiredMessage, provideValidMessage } = require('../utils/validationMessages');
+const { requiredMessage, provideValidMessage } = require('../utils/validation/validationMessages');
 const { ASSET_MODEL } = require('../constants/models');
 const { AssetGroup, AssetType } = require('../constants/enums');
 const { ASSET_FIELDS } = require('../constants/fields');

@@ -8,6 +8,7 @@ services:
       - "3000:3000"
     environment:
       - NODE_ENV=${NODE_ENV}
+      - PORT=${PORT}
 
   mongodb:
     image: mongodb/mongodb-community-server:latest

@@ -1,6 +1,6 @@
 const { COMMON_NAME_FIELD, COMMON_DETAILS_FIELDS, PRICE_FIELDS } = require('../../constants/fields');
 const { COMMON_LIMITS } = require('../../constants/limits');
-const validationMessages = require('../../utils/validationMessages');
+const validationMessages = require('../../utils/validation/validationMessages');
 
 const nameDefinition = (model) => {
     return {
