@@ -4,7 +4,7 @@ const bcrypt = require('bcryptjs');
 const { schemaFactoryWithName } = require('./helpers/modelFactory');
 const validationMessages = require('../utils/validation/validationMessages');
 const { USER_MODEL, WALLET_MODEL } = require('../constants/models');
-const { UserRole } = require('../constants/enums');
+const { userRole } = require('../constants/enums');
 const { USER_FIELDS } = require('../constants/fields');
 const { USER_LIMITS } = require('../constants/limits');
 
@@ -30,8 +30,8 @@ const userSchema = schemaFactoryWithName(
         },
         role: {
             type: String,
-            enum: UserRole,
-            default: UserRole.USER
+            enum: userRole,
+            default: userRole.USER
         },
         password: {
             type: String,
