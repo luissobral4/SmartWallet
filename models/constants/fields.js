@@ -1,8 +1,8 @@
-const COMMON_NAME_FIELD = {
+const commonNameField = {
     NAME: 'name'
 }
 
-const COMMON_DETAILS_FIELDS = {
+const commonDetailsFields = {
     VOLUME: 'volume',
     NOMINAL_VALUE: 'nominal_value',
     MARKET_VALUE: 'market_value',
@@ -10,12 +10,12 @@ const COMMON_DETAILS_FIELDS = {
     PROFIT_PERCENTAGE: 'profit_percentage'
 }
 
-const PRICE_FIELDS = {
+const priceFields = {
     OPEN_PRICE: 'open_price',
     MARKET_PRICE: 'market_price',
 }
 
-const USER_FIELDS = {
+const userFields = {
     WALLET: 'wallet',
     EMAIL: 'email',
     AGE: 'age',
@@ -24,10 +24,10 @@ const USER_FIELDS = {
     PASSWORD: 'password',
     PASSWORD_CONFIRM: 'password_confirm',
     PASSWORD_CHANGED_AT: 'password_changed_at',
-    ...COMMON_NAME_FIELD
+    ...commonNameField
 }
 
-const ASSET_FIELDS = {
+const assetFields = {
     SYMBOL: 'symbol',
     ISSUER: 'issuer',
     CURRENCY: 'currency',
@@ -35,37 +35,37 @@ const ASSET_FIELDS = {
     TYPE: 'type',
     PRICE_HISTORY: 'price_history',
     METADATA: 'metadata',
-    ...COMMON_NAME_FIELD
+    ...commonNameField
 }
 
-const ASSET_POSITION_FIELDS = {
+const assetPositionFields = {
     ASSET: 'asset',
     TRANSACTIONS: 'transactions',
-    ...PRICE_FIELDS,
-    ...COMMON_DETAILS_FIELDS
+    ...priceFields,
+    ...commonDetailsFields
 }
 
-const TRANSACTION_FIELDS = {
+const transactionFields = {
     USER: 'user',
     ASSET: 'asset',
     DATE: 'date',
     //TYPE: 'type',
-    ...PRICE_FIELDS,
-    ...COMMON_DETAILS_FIELDS
+    ...priceFields,
+    ...commonDetailsFields
 }
 
-const WALLET_FIELDS = {
+const walletFields = {
     ASSETS: 'assets',
-    ...COMMON_DETAILS_FIELDS
+    ...commonDetailsFields
 }
 
 module.exports = {
-    USER_FIELDS,
-    ASSET_FIELDS,
-    ASSET_POSITION_FIELDS,
-    TRANSACTION_FIELDS,
-    WALLET_FIELDS,
-    COMMON_DETAILS_FIELDS,
-    COMMON_NAME_FIELD,
-    PRICE_FIELDS
+    userFields,
+    assetFields,
+    assetPositionFields,
+    transactionFields,
+    walletFields,
+    commonDetailsFields,
+    commonNameField,
+    priceFields
 };

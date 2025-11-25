@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const { schemaFactoryWithAssetDetails } = require('./helpers/modelFactory');
 const validationMessages = require('../utils/validation/validationMessages');
 const { TRANSACTION_MODEL, ASSET_MODEL, USER_MODEL } = require('../constants/models');
-const { TRANSACTION_FIELDS } = require('../constants/fields');
+const { transactionFields } = require('../constants/fields');
 
 const transactionSchema = schemaFactoryWithAssetDetails(
     TRANSACTION_MODEL,
@@ -19,7 +19,7 @@ const transactionSchema = schemaFactoryWithAssetDetails(
         },
         date: {
             type: Date,
-            required: [true, validationMessages.requiredMessage(TRANSACTION_MODEL, TRANSACTION_FIELDS.DATE)]
+            required: [true, validationMessages.requiredMessage(TRANSACTION_MODEL, transactionFields.DATE)]
         }
         // type!! (BUY/SELL)
     }

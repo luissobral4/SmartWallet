@@ -4,8 +4,8 @@ const bcrypt = require('bcryptjs');
 const { schemaFactoryWithName } = require('./helpers/modelFactory');
 const validationMessages = require('../utils/validation/validationMessages');
 const { USER_MODEL, WALLET_MODEL } = require('../constants/models');
-const { userRole } = require('../constants/enums');
-const { USER_FIELDS } = require('../constants/fields');
+const { userRole } = require('../enums');
+const { userFields } = require('../constants/fields');
 const { USER_LIMITS } = require('../constants/limits');
 
 const userSchema = schemaFactoryWithName(
@@ -13,16 +13,16 @@ const userSchema = schemaFactoryWithName(
     {
         email: {
             type: String,
-            required: [true, validationMessages.requiredMessage(USER_MODEL, USER_FIELDS.EMAIL)],
+            required: [true, validationMessages.requiredMessage(USER_MODEL, userFields.EMAIL)],
             unique: true,
             lowercase: true,
-            validate: [validate.isEmail, validationMessages.provideValidMessage(USER_FIELDS.EMAIL)]
+            validate: [validate.isEmail, validationMessages.provideValidMessage(userFields.EMAIL)]
         },
         age: {
             type: Number,
-            required: [true, validationMessages.requiredMessage(USER_MODEL, USER_FIELDS.AGE)],
-            min: [USER_LIMITS.AGE.MIN, validationMessages.minMessage(USER_MODEL, USER_FIELDS.AGE, USER_LIMITS.AGE.MIN)],
-            max: [USER_LIMITS.AGE.MAX, validationMessages.maxMessage(USER_MODEL, USER_FIELDS.AGE, USER_LIMITS.AGE.MAX)]
+            required: [true, validationMessages.requiredMessage(USER_MODEL, userFields.AGE)],
+            min: [USER_LIMITS.AGE.MIN, validationMessages.minMessage(USER_MODEL, userFields.AGE, USER_LIMITS.AGE.MIN)],
+            max: [USER_LIMITS.AGE.MAX, validationMessages.maxMessage(USER_MODEL, userFields.AGE, USER_LIMITS.AGE.MAX)]
         },
         photo: {
             type: String,
@@ -35,16 +35,16 @@ const userSchema = schemaFactoryWithName(
         },
         password: {
             type: String,
-            required: [true, validationMessages.requiredMessage(USER_MODEL, USER_FIELDS.PASSWORD)],
+            required: [true, validationMessages.requiredMessage(USER_MODEL, userFields.PASSWORD)],
             minLength: [
                 USER_LIMITS.PASSWORD.MIN_LENGTH,
-                validationMessages.minLengthMessage(USER_MODEL, USER_FIELDS.PASSWORD, USER_LIMITS.PASSWORD.MIN_LENGTH)
+                validationMessages.minLengthMessage(USER_MODEL, userFields.PASSWORD, USER_LIMITS.PASSWORD.MIN_LENGTH)
             ],
             select: false
         },
         password_confirm: {
             type: String,
-            required: [true, validationMessages.requiredMessage(USER_MODEL, USER_FIELDS.PASSWORD)],
+            required: [true, validationMessages.requiredMessage(USER_MODEL, userFields.PASSWORD)],
             validate: {
                 // This only works on CREATE and SAVE!
                 validator: function (val) {
@@ -70,7 +70,7 @@ const userSchema = schemaFactoryWithName(
 );
 
 userSchema.pre('save', async function (next) {
-    if (!this.isModified(USER_FIELDS.PASSWORD)) return next();
+    if (!this.isModified(userFields.PASSWORD)) return next();
 
     this.password = await bcrypt.hash(this.password, 12);
     this.password_confirm = undefined;
@@ -78,7 +78,7 @@ userSchema.pre('save', async function (next) {
 });
 
 userSchema.pre('save', function (next) {
-    if (!this.isModified(USER_FIELDS.PASSWORD) || this.isNew) return next();
+    if (!this.isModified(userFields.PASSWORD) || this.isNew) return next();
 
     this.password_changed_at = Date.now() - 1000;
     next();

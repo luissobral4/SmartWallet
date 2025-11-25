@@ -3,15 +3,15 @@ const validate = require('validator');
 const { schemaFactoryWithName } = require('./helpers/modelFactory');
 const { requiredMessage, provideValidMessage } = require('../utils/validation/validationMessages');
 const { ASSET_MODEL } = require('../constants/models');
-const { AssetGroup, AssetType } = require('../constants/enums');
-const { ASSET_FIELDS } = require('../constants/fields');
+const { AssetGroup, AssetType } = require('../enums');
+const { assetFields } = require('../constants/fields');
 
 const assetSchema = schemaFactoryWithName(
     ASSET_MODEL,
     {
         symbol: {
             type: String,
-            required: [true, requiredMessage(ASSET_MODEL, ASSET_FIELDS.SYMBOL)],
+            required: [true, requiredMessage(ASSET_MODEL, assetFields.SYMBOL)],
             unique: true,
             uppercase: true
         },
@@ -20,23 +20,23 @@ const assetSchema = schemaFactoryWithName(
         },
         currency: {
             type: String,
-            required: [true, requiredMessage(ASSET_MODEL, ASSET_FIELDS.CURRENCY)],
-            validate: [validate.isCurrency, provideValidMessage(ASSET_FIELDS.CURRENCY)]
+            required: [true, requiredMessage(ASSET_MODEL, assetFields.CURRENCY)],
+            validate: [validate.isCurrency, provideValidMessage(assetFields.CURRENCY)]
         },
         group: {
             type: String,
-            required: [true, requiredMessage(ASSET_MODEL, ASSET_FIELDS.GROUP)],
+            required: [true, requiredMessage(ASSET_MODEL, assetFields.GROUP)],
             enum: AssetGroup,
         },
         type: {
             type: String,
-            required: [true, requiredMessage(ASSET_MODEL, ASSET_FIELDS.TYPE)],
+            required: [true, requiredMessage(ASSET_MODEL, assetFields.TYPE)],
             enum: AssetType,
         },
         price_history: {
             type: Map,
             of: Number,
-            required: [true, requiredMessage(ASSET_MODEL, ASSET_FIELDS.PRICE_HISTORY)],
+            required: [true, requiredMessage(ASSET_MODEL, assetFields.PRICE_HISTORY)],
             validate: {
                 validator: function (val) {
                     for (let [key] of val) {
