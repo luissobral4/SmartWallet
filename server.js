@@ -1,6 +1,11 @@
 const dotent = require('dotenv');
-
 const app = require('./app');
+
+process.on('uncaughtException', (err) => {
+    console.log(err.name, err.message, err.stack);
+    console.log(`UNCAUGHT EXCEPTION! Shutting down...`);
+    process.exit(1);
+});
 
 dotent.config({ path: './.env' });
 

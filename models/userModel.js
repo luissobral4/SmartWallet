@@ -2,9 +2,9 @@ const mongoose = require('mongoose');
 const validate = require('validator');
 const bcrypt = require('bcryptjs');
 const { schemaFactoryWithName } = require('./helpers/modelFactory');
-const validationMessages = require('../utils/validationMessages');
+const validationMessages = require('../utils/validation/validationMessages');
 const { USER_MODEL, WALLET_MODEL } = require('../constants/models');
-const { USER_ROLE } = require('../constants/enums');
+const { userRole } = require('../constants/enums');
 const { USER_FIELDS } = require('../constants/fields');
 const { USER_LIMITS } = require('../constants/limits');
 
@@ -30,8 +30,8 @@ const userSchema = schemaFactoryWithName(
         },
         role: {
             type: String,
-            enum: USER_ROLE,
-            default: USER_ROLE.USER
+            enum: userRole,
+            default: userRole.USER
         },
         password: {
             type: String,

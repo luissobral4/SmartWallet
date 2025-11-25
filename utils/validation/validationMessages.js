@@ -1,4 +1,4 @@
-const messageHelpers = require("./messageHelpers");
+const messageHelpers = require("./messageBuilder");
 
 const requiredMessage = (object, field) => {
     return messageHelpers.messageRequiredBuilder(object, field);
