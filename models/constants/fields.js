@@ -1,18 +1,24 @@
-const commonNameField = {
+const commonDetailFields = {
     NAME: 'name'
 }
 
-const commonDetailsFields = {
-    VOLUME: 'volume',
-    NOMINAL_VALUE: 'nominal_value',
-    MARKET_VALUE: 'market_value',
+const commomProfitFields = {
     PROFIT: 'profit',
     PROFIT_PERCENTAGE: 'profit_percentage'
 }
 
-const priceFields = {
+const commonPriceFields = {
     OPEN_PRICE: 'open_price',
     MARKET_PRICE: 'market_price',
+}
+
+const commonVolumeFields = {
+    VOLUME: 'volume'
+}
+
+const commonValueFields = {
+    NOMINAL_VALUE: 'nominal_value',
+    MARKET_VALUE: 'market_value',
 }
 
 const userFields = {
@@ -24,7 +30,7 @@ const userFields = {
     PASSWORD: 'password',
     PASSWORD_CONFIRM: 'password_confirm',
     PASSWORD_CHANGED_AT: 'password_changed_at',
-    ...commonNameField
+    ...commonDetailFields
 }
 
 const assetFields = {
@@ -35,14 +41,16 @@ const assetFields = {
     TYPE: 'type',
     PRICE_HISTORY: 'price_history',
     METADATA: 'metadata',
-    ...commonNameField
+    ...commonDetailFields
 }
 
 const assetPositionFields = {
     ASSET: 'asset',
     TRANSACTIONS: 'transactions',
-    ...priceFields,
-    ...commonDetailsFields
+    ...commonPriceFields,
+    ...commomProfitFields,
+    ...commonValueFields,
+    ...commonVolumeFields
 }
 
 const transactionFields = {
@@ -50,13 +58,16 @@ const transactionFields = {
     ASSET: 'asset',
     DATE: 'date',
     //TYPE: 'type',
-    ...priceFields,
-    ...commonDetailsFields
+    OPEN_PRICE: commonPriceFields.OPEN_PRICE,
+    NOMINAL_VALUE: commonValueFields.NOMINAL_VALUE,
+    ...commomProfitFields,
+    ...commonValueFields
 }
 
 const walletFields = {
     ASSETS: 'assets',
-    ...commonDetailsFields
+    ...commomProfitFields,
+    ...commonValueFields
 }
 
 module.exports = {
@@ -65,7 +76,9 @@ module.exports = {
     assetPositionFields,
     transactionFields,
     walletFields,
-    commonDetailsFields,
-    commonNameField,
-    priceFields
+    commonDetailFields,
+    commonPriceFields,
+    commomProfitFields,
+    commonValueFields,
+    commonVolumeFields
 };

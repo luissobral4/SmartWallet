@@ -6,7 +6,7 @@ const validationMessages = require('../utils/validation/validationMessages');
 const { USER_MODEL, WALLET_MODEL } = require('../constants/models');
 const { userRole } = require('../enums');
 const { userFields } = require('../constants/fields');
-const { USER_LIMITS } = require('../constants/limits');
+const { userLimits } = require('../constants/limits');
 
 const userSchema = schemaFactoryWithName(
     USER_MODEL,
@@ -21,8 +21,8 @@ const userSchema = schemaFactoryWithName(
         age: {
             type: Number,
             required: [true, validationMessages.requiredMessage(USER_MODEL, userFields.AGE)],
-            min: [USER_LIMITS.AGE.MIN, validationMessages.minMessage(USER_MODEL, userFields.AGE, USER_LIMITS.AGE.MIN)],
-            max: [USER_LIMITS.AGE.MAX, validationMessages.maxMessage(USER_MODEL, userFields.AGE, USER_LIMITS.AGE.MAX)]
+            min: [userLimits.AGE.MIN, validationMessages.minMessage(USER_MODEL, userFields.AGE, userLimits.AGE.MIN)],
+            max: [userLimits.AGE.MAX, validationMessages.maxMessage(USER_MODEL, userFields.AGE, userLimits.AGE.MAX)]
         },
         photo: {
             type: String,
@@ -37,8 +37,8 @@ const userSchema = schemaFactoryWithName(
             type: String,
             required: [true, validationMessages.requiredMessage(USER_MODEL, userFields.PASSWORD)],
             minLength: [
-                USER_LIMITS.PASSWORD.MIN_LENGTH,
-                validationMessages.minLengthMessage(USER_MODEL, userFields.PASSWORD, USER_LIMITS.PASSWORD.MIN_LENGTH)
+                userLimits.PASSWORD.MIN_LENGTH,
+                validationMessages.minLengthMessage(USER_MODEL, userFields.PASSWORD, userLimits.PASSWORD.MIN_LENGTH)
             ],
             select: false
         },
