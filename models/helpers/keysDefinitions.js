@@ -1,19 +1,19 @@
-const { COMMON_NAME_FIELD, COMMON_DETAILS_FIELDS, PRICE_FIELDS } = require('../../constants/fields');
-const { COMMON_LIMITS } = require('../../constants/limits');
+const { commonDetailFields, commonValueFields, commonPriceFields, commonVolumeFields } = require('../../constants/fields');
+const { commonDetailLimits, commonProfitLimits, commonValueLimits, commonPriceLimits, commonVolumeLimits } = require('../../constants/limits');
 const validationMessages = require('../../utils/validation/validationMessages');
 
 const nameDefinition = (model) => {
     return {
         name: {
             type: String,
-            required: [true, validationMessages.requiredMessage(model, COMMON_NAME_FIELD.NAME)],
+            required: [true, validationMessages.requiredMessage(model, commonDetailFields.NAME)],
             minLength: [
-                COMMON_LIMITS.NAME.MIN_LENGTH,
-                validationMessages.minLengthMessage(model, COMMON_NAME_FIELD.NAME, COMMON_LIMITS.NAME.MIN_LENGTH)
+                commonDetailLimits.NAME.MIN_LENGTH,
+                validationMessages.minLengthMessage(model, commonDetailFields.NAME, commonDetailLimits.NAME.MIN_LENGTH)
             ],
             maxLength: [
-                COMMON_LIMITS.NAME.MAX_LENGTH,
-                validationMessages.minLengthMessage(model, COMMON_NAME_FIELD.NAME, COMMON_LIMITS.NAME.MAX_LENGTH)
+                commonDetailLimits.NAME.MAX_LENGTH,
+                validationMessages.minLengthMessage(model, commonDetailFields.NAME, commonDetailLimits.NAME.MAX_LENGTH)
             ]
         }
     };
@@ -22,11 +22,11 @@ const nameDefinition = (model) => {
 const profitDefinitions = {
     profit: {
         type: Number,
-        default: COMMON_LIMITS.PROFIT.DEFAULT
+        default: commonProfitLimits.PROFIT.DEFAULT
     },
     profit_percentage: {
         type: Number,
-        default: COMMON_LIMITS.PROFIT_PERCENTAGE.DEFAULT
+        default: commonProfitLimits.PROFIT_PERCENTAGE.DEFAULT
     }
 };
 
@@ -34,18 +34,18 @@ const valueDefinitions = (model) => {
     return {
         nominal_value: {
             type: Number,
-            required: [true, validationMessages.requiredMessage(model, COMMON_DETAILS_FIELDS.NOMINAL_VALUE)],
+            required: [true, validationMessages.requiredMessage(model, commonValueFields.NOMINAL_VALUE)],
             min: [
-                COMMON_LIMITS.NOMINAL_VALUE.MIN,
-                validationMessages.minMessage(model, COMMON_DETAILS_FIELDS.NOMINAL_VALUE, COMMON_LIMITS.NOMINAL_VALUE.MIN)
+                commonDetailLimits.NOMINAL_VALUE.MIN,
+                validationMessages.minMessage(model, commonValueFields.NOMINAL_VALUE, commonValueLimits.NOMINAL_VALUE.MIN)
             ]
         },
         market_value: {
             type: Number,
-            default: COMMON_LIMITS.MARKET_VALUE.DEFAULT,
+            default: commonValueLimits.MARKET_VALUE.DEFAULT,
             min: [
-                COMMON_LIMITS.MARKET_VALUE.MIN,
-                validationMessages.minMessage(model, COMMON_DETAILS_FIELDS.MARKET_VALUE, COMMON_LIMITS.MARKET_VALUE.MIN)
+                commonValueLimits.MARKET_VALUE.MIN,
+                validationMessages.minMessage(model, commonValueFields.MARKET_VALUE, commonValueLimits.MARKET_VALUE.MIN)
             ]
         }
     }
@@ -55,18 +55,18 @@ const priceDefinitions = (model) => {
     return {
         open_price: {
             type: Number,
-            required: [true, validationMessages.requiredMessage(model, PRICE_FIELDS.OPEN_PRICE)],
+            required: [true, validationMessages.requiredMessage(model, commonPriceFields.OPEN_PRICE)],
             min: [
-                COMMON_LIMITS.OPEN_PRICE.MIN,
-                validationMessages.minMessage(model, PRICE_FIELDS.OPEN_PRICE, COMMON_LIMITS.OPEN_PRICE.MIN)
+                commonPriceLimits.OPEN_PRICE.MIN,
+                validationMessages.minMessage(model, commonPriceFields.OPEN_PRICE, commonPriceLimits.OPEN_PRICE.MIN)
             ]
         },
         market_price: {
             type: Number,
-            default: COMMON_LIMITS.ACTUAL_MARKET.DEFAULT,
+            default: commonPriceLimits.MARKET_PRICE.DEFAULT,
             min: [
-                COMMON_LIMITS.ACTUAL_MARKET.MIN,
-                validationMessages.minMessage(model, PRICE_FIELDS.ACTUAL_MARKET, COMMON_LIMITS.ACTUAL_MARKET.MIN)
+                commonPriceLimits.ACTUAL_MARKET.MIN,
+                validationMessages.minMessage(model, commonPriceFields.M, commonPriceLimits.ACTUAL_MARKET.MIN)
             ]
         }
     }
@@ -76,10 +76,10 @@ const volumeDefinition = (model) => {
     return {
         volume: {
             type: Number,
-            required: [true, validationMessages.requiredMessage(model, COMMON_DETAILS_FIELDS.VOLUME)],
+            required: [true, validationMessages.requiredMessage(model, commonVolumeFields.VOLUME)],
             min: [
-                COMMON_LIMITS.VOLUME.MIN,
-                validationMessages.minMessage(model, COMMON_DETAILS_FIELDS.VOLUME, COMMON_LIMITS.VOLUME.MIN)
+                commonVolumeLimits.VOLUME.MIN,
+                validationMessages.minMessage(model, commonVolumeFields.VOLUME, commonVolumeLimits.VOLUME.MIN)
             ]
         }
     }

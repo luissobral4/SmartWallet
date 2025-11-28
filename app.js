@@ -5,7 +5,7 @@ const rateLimit = require('express-rate-limit');
 
 const AppError = require('./utils/error/appError');
 const globalErrorHandler = require('./controllers/errorController');
-const { environmentType } = require('./constants/enums/environmentType');
+const { environmentType } = require('./enums/environmentType');
 
 const app = express();
 

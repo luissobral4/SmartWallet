@@ -1,5 +1,5 @@
-const { environmentType } = require('../constants/enums/environmentType');
-const { errorType } = require('../constants/enums/errorType');
+const { environmentType } = require('../enums/environmentType');
+const { errorType } = require('../enums/errorType');
 const AppError = require('../utils/error/appError');
 
 const sendErrorDev = (err, res) => {
