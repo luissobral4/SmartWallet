@@ -1,6 +1,8 @@
 const { environmentType } = require('../enums/environmentType');
 const { errorType } = require('../enums/errorType');
+const { status } = require('../enums/status');
 const AppError = require('../utils/error/appError');
+const ErrorMessages = require('../utils/error/errorMessages');
 
 const sendErrorDev = (err, res) => {
     res.status(err.statusCode).json({
@@ -21,17 +23,17 @@ const sendErrorProd = (err, res) => {
         console.error('ERROR', err);
 
         res.status(500).json({
-            status: 'error',
-            message: 'Something went wrong!'
+            status: status.ERROR,
+            message: ErrorMessages.somethingWentWrongMessage
         });
     }
 };
 
 const handleJWTErrorDB = () =>
-    new AppError('Invalid token. pPlease login again!', 401);
+    new AppError(ErrorMessages.invalidTokenMessage, 401);
 
 const handleJWTExpiredErrorDB = () =>
-    new AppError('Your token has expired. please login again!', 401);
+    new AppError(ErrorMessages.expiredTokenMessage, 401);
 
 const handleCastErrorDB = (err) => {
     const message = `Invalid ${err.path}: ${err.value}`;
@@ -41,21 +43,21 @@ const handleCastErrorDB = (err) => {
 
 const handleDuplicatedFieldsDB = (err) => {
     const value = err.errmsg.match(/(["'])(\\?.)*?\1/)[0];
-    const message = `Duplicated field value: ${value}.Please use another value!`;
+    const message = ErrorMessages.duplicatedFieldMessage(value);
 
     return new AppError(message, 400);
 };
 
 const handleValidatorErrorDB = (err) => {
     const errors = Object.values(err.errors).map((el) => el.message);
-    const message = `Invalid input data. ${errors.join(' ')}`;
+    const message = ErrorMessages.invalidIbputDataMessage(errors);
 
     return new AppError(message, 400);
 };
 
 module.exports = (err, req, res, next) => {
     err.statusCode = err.statusCode || 500;
-    err.status = err.status || 'error';
+    err.status = err.status || status.ERROR;
 
     if (process.env.NODE_ENV === environmentType.DEVELOPMENT) {
         sendErrorDev(err, res);
