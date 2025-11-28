@@ -1,8 +1,8 @@
 const errorType = Object.freeze({
-  CAST_ERROR: Symbol('CastError'),
-  VALIDATION_ERROR:  Symbol('ValidationError'),
-  JWT_ERROR: Symbol('JsonWebTokenError'),
-  JWT_EXPIRED_ERROR: Symbol('jwt TokenExpiredError error')
+  CAST_ERROR: 'CastError',
+  VALIDATION_ERROR:  'ValidationError',
+  JWT_ERROR: 'JsonWebTokenError',
+  JWT_EXPIRED_ERROR: 'jwt TokenExpiredError error'
 });
 
 module.exports = {

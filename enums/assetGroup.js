@@ -1,12 +1,12 @@
 const assetGroup = Object.freeze({
-  STOCK: Symbol('stock'),
-  ETF: Symbol('etf'),
-  CRYPTO: Symbol('crypto'),
-  FUND: Symbol('fund'),
-  CASH: Symbol('cash'),
-  BOND: Symbol('bond'),
-  TREASURY_CERTIFICATE: Symbol('treasury certificate'),
-  OTHER: Symbol('other')
+  STOCK: 'stock',
+  ETF: 'etf',
+  CRYPTO: 'crypto',
+  FUND: 'fund',
+  CASH: 'cash',
+  BOND: 'bond',
+  TREASURY_CERTIFICATE: 'treasury certificate',
+  OTHER: 'other'
 });
 
 module.exports = {

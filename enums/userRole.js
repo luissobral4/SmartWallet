@@ -1,6 +1,6 @@
 const userRole = Object.freeze({
-  ADMIN: Symbol('admin'),
-  USER: Symbol('user')
+  ADMIN: 'admin',
+  USER: 'user'
 });
 
 module.exports = {
