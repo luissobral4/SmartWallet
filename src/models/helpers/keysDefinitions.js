@@ -1,6 +1,17 @@
-const { commonDetailFields, commonValueFields, commonPriceFields, commonVolumeFields } = require('../../constants/fields');
-const { commonDetailLimits, commonProfitLimits, commonValueLimits, commonPriceLimits, commonVolumeLimits } = require('../../constants/limits');
-const validationMessages = require('../../utils/validation/validationMessages');
+const { 
+    commonDetailFields,
+    commonValueFields,
+    commonPriceFields,
+    commonVolumeFields 
+} = require('../constants/fields');
+const {
+    commonDetailLimits,
+    commonProfitLimits,
+    commonValueLimits,
+    commonPriceLimits,
+    commonVolumeLimits
+} = require('../constants/limits');
+const validationMessages = require('../../utils/messages/validationMessages');
 
 const nameDefinition = (model) => {
     return {
@@ -36,7 +47,7 @@ const valueDefinitions = (model) => {
             type: Number,
             required: [true, validationMessages.requiredMessage(model, commonValueFields.NOMINAL_VALUE)],
             min: [
-                commonDetailLimits.NOMINAL_VALUE.MIN,
+                commonValueLimits.NOMINAL_VALUE.MIN,
                 validationMessages.minMessage(model, commonValueFields.NOMINAL_VALUE, commonValueLimits.NOMINAL_VALUE.MIN)
             ]
         },
@@ -65,8 +76,8 @@ const priceDefinitions = (model) => {
             type: Number,
             default: commonPriceLimits.MARKET_PRICE.DEFAULT,
             min: [
-                commonPriceLimits.ACTUAL_MARKET.MIN,
-                validationMessages.minMessage(model, commonPriceFields.M, commonPriceLimits.ACTUAL_MARKET.MIN)
+                commonPriceLimits.MARKET_PRICE.MIN,
+                validationMessages.minMessage(model, commonPriceFields.MARKET_PRICE, commonPriceLimits.MARKET_PRICE.MIN)
             ]
         }
     }
@@ -85,6 +96,18 @@ const volumeDefinition = (model) => {
     }
 };
 
+const transactionDetailsDefinitions = (model) => {
+    const valDefs = valueDefinitions(model);
+    const prDefs = priceDefinitions(model);
+
+    return {
+        nominal_value: valDefs.nominal_value,
+        open_price: prDefs.open_price,
+        ...volumeDefinition(model),
+        ...profitDefinitions
+    };
+};
+
 const assetDetailsDefinitions = (model) => {
     return {
         ...volumeDefinition(model),
@@ -96,7 +119,6 @@ const assetDetailsDefinitions = (model) => {
 
 const walletDetailsDefinitions = (model) => {
     return {
-        ...volumeDefinition(model),
         ...valueDefinitions(model),
         ...profitDefinitions
     }
@@ -104,6 +126,7 @@ const walletDetailsDefinitions = (model) => {
 
 module.exports = {
     nameDefinition,
+    transactionDetailsDefinitions,
     assetDetailsDefinitions,
     walletDetailsDefinitions
 };

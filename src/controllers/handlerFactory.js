@@ -1,6 +1,6 @@
 
-const catchAsync = require('../utils/catchAsync');
-const AppError = require('../utils/appError');
+const catchAsync = require('../utils/error/catchAsync');
+const AppError = require('../utils/error/appError');
 const APIFeatures = require('../utils/apiFeatures');
 const responseStatus = require('../utils/responseStatus');
 const errorMessages = require('../utils/messages/errorMessages');
@@ -29,7 +29,7 @@ const getOne = (Model, popOptions) =>
 const getAll = (Model) =>
     catchAsync(async (req, res, next) => {
         let filter = {};
-        if (req.params.tourId) filter = { tour: req.params.tourId };
+        if (req.user) filter = { user: req.user.id };
 
         const features = new APIFeatures(Model.find(filter), req.query)
             .filter()

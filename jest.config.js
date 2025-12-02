@@ -1,0 +1,6 @@
+module.exports = {
+  testEnvironment: "node",
+  setupFilesAfterEnv: ["./tests/setup.js"],
+  testPathIgnorePatterns: ["/node_modules/", "/dist/"],
+  coveragePathIgnorePatterns: ["/node_modules/", "/tests/"],
+};

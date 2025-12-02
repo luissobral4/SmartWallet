@@ -6,7 +6,7 @@
   "scripts": {
     "start:dev": "NODE_ENV=development nodemon server.js",
     "start:prod": "NODE_ENV=production node server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest --runInBand"
   },
   "repository": {
     "type": "git",
@@ -19,9 +19,13 @@
   },
   "homepage": "https://github.com/luissobral4/SmartWallet#readme",
   "devDependencies": {
+    "@jest/globals": "^30.2.0",
     "eslint": "^9.38.0",
     "globals": "^16.5.0",
-    "nodemon": "^3.1.10"
+    "jest": "^30.2.0",
+    "mongodb-memory-server": "^10.3.0",
+    "nodemon": "^3.1.10",
+    "supertest": "^7.1.4"
   },
   "dependencies": {
     "bcryptjs": "^3.0.2",
