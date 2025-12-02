@@ -1,6 +1,9 @@
-const { environmentType } = require('../enums/environmentType');
-const { errorType } = require('../enums/errorType');
+const environmentType = require('../enums/environmentType');
+const errorType = require('../utils/error/errorType');
 const AppError = require('../utils/error/appError');
+const errorMessages = require('../utils/messages/errorMessages');
+const responseStatus = require('../utils/responseStatus');
+const responseStatusCode = require('../utils/responseStatusCode');
 
 const sendErrorDev = (err, res) => {
     res.status(err.statusCode).json({
@@ -20,42 +23,42 @@ const sendErrorProd = (err, res) => {
     } else {
         console.error('ERROR', err);
 
-        res.status(500).json({
-            status: 'error',
-            message: 'Something went wrong!'
+        res.status(responseStatusCode.INTERNAL_SERVER_ERROR).json({
+            status: responseStatus.ERROR,
+            message: errorMessages.somethingWentWrongMessage
         });
     }
 };
 
 const handleJWTErrorDB = () =>
-    new AppError('Invalid token. pPlease login again!', 401);
+    new AppError(errorMessages.invalidTokenMessage, responseStatusCode.UNAUTHORIZED);
 
 const handleJWTExpiredErrorDB = () =>
-    new AppError('Your token has expired. please login again!', 401);
+    new AppError(errorMessages.expiredTokenMessage, responseStatusCode.UNAUTHORIZED);
 
 const handleCastErrorDB = (err) => {
-    const message = `Invalid ${err.path}: ${err.value}`;
+    const message = errorMessages.invalidMessage(err.path, err.value);
 
-    return new AppError(message, 400);
+    return new AppError(message, responseStatusCode.BAD_REQUEST);
 };
 
 const handleDuplicatedFieldsDB = (err) => {
     const value = err.errmsg.match(/(["'])(\\?.)*?\1/)[0];
-    const message = `Duplicated field value: ${value}.Please use another value!`;
+    const message = errorMessages.duplicatedFieldMessage(value);
 
-    return new AppError(message, 400);
+    return new AppError(message, responseStatusCode.BAD_REQUEST);
 };
 
 const handleValidatorErrorDB = (err) => {
     const errors = Object.values(err.errors).map((el) => el.message);
-    const message = `Invalid input data. ${errors.join(' ')}`;
+    const message = errorMessages.invalidIbputDataMessage(errors);
 
-    return new AppError(message, 400);
+    return new AppError(message, responseStatusCode.BAD_REQUEST);
 };
 
 module.exports = (err, req, res, next) => {
-    err.statusCode = err.statusCode || 500;
-    err.status = err.status || 'error';
+    err.statusCode = err.statusCode || responseStatusCode.INTERNAL_SERVER_ERROR;
+    err.status = err.status || responseStatus.ERROR;
 
     if (process.env.NODE_ENV === environmentType.DEVELOPMENT) {
         sendErrorDev(err, res);

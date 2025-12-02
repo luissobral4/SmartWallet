@@ -1,9 +1,11 @@
 const dotent = require('dotenv');
 const app = require('./app');
+const errorMessages = require('./utils/messages/errorMessages');
+const errorType = require('./utils/error/errorType');
 
-process.on('uncaughtException', (err) => {
+process.on(errorType.UNCAUGHT_EXCEPTION, (err) => {
     console.log(err.name, err.message, err.stack);
-    console.log(`UNCAUGHT EXCEPTION! Shutting down...`);
+    console.log(errorMessages.unhandledExceptionMessage);
     process.exit(1);
 });
 
@@ -15,9 +17,9 @@ const server = app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });
 
-process.on('unhandledRejection', (err) => {
+process.on(errorType.UNHANDLED_REJECTION, (err) => {
     console.log(err.name, err.message, err.stack);
-    console.log(`UNHANDLED REJECTION! Shutting down...`);
+    console.log(errorMessages.unhandledRejectionMessage);
     server.close(() => {
         process.exit(1);
     });
