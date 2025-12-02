@@ -2,9 +2,9 @@
 const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
 const APIFeatures = require('../utils/apiFeatures');
-const { responseStatus } = require('../utils/responseStatus');
-const { documentNotFoundMessage } = require('../utils/messages/errorMessages');
-const { responseStatusCode } = require('../utils/responseStatusCode');
+const responseStatus = require('../utils/responseStatus');
+const errorMessages = require('../utils/messages/errorMessages');
+const responseStatusCode = require('../utils/responseStatusCode');
 
 const getOne = (Model, popOptions) =>
     catchAsync(async (req, res, next) => {
@@ -14,7 +14,7 @@ const getOne = (Model, popOptions) =>
         const doc = await query;
 
         if (!doc) {
-            return next(new AppError(documentNotFoundMessage, responseStatusCode.NOT_FOUND));
+            return next(new AppError(errorMessages.documentNotFoundMessage, responseStatusCode.NOT_FOUND));
         }
 
         res.status(responseStatusCode.OK).json({
@@ -73,7 +73,7 @@ const updateOne = (Model) =>
         );
 
         if (!updatedDoc) {
-            return next(new AppError(documentNotFoundMessage, responseStatusCode.NOT_FOUND));
+            return next(new AppError(errorMessages.documentNotFoundMessage, responseStatusCode.NOT_FOUND));
         }
 
         res.status(responseStatusCode.OK).json({
@@ -90,7 +90,7 @@ const deleteOne = (Model) =>
         const doc = await Model.findByIdAndDelete(req.params.id);
 
         if (!doc) {
-            return next(new AppError(documentNotFoundMessage, responseStatusCode.NOT_FOUND));
+            return next(new AppError(errorMessages.documentNotFoundMessage, responseStatusCode.NOT_FOUND));
         }
 
         res.status(responseStatusCode.NO_CONTENT).json({

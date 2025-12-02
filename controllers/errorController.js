@@ -1,9 +1,9 @@
-const { environmentType } = require('../enums/environmentType');
-const { errorType } = require('../utils/error/errorType');
-const { responseStatus } = require('../utils/responseStatus');
+const environmentType = require('../enums/environmentType');
+const errorType = require('../utils/error/errorType');
 const AppError = require('../utils/error/appError');
-const ErrorMessages = require('../utils/messages/errorMessages');
-const { responseStatusCode } = require('../utils/responseStatusCode');
+const errorMessages = require('../utils/messages/errorMessages');
+const responseStatus = require('../utils/responseStatus');
+const responseStatusCode = require('../utils/responseStatusCode');
 
 const sendErrorDev = (err, res) => {
     res.status(err.statusCode).json({
@@ -25,33 +25,33 @@ const sendErrorProd = (err, res) => {
 
         res.status(responseStatusCode.INTERNAL_SERVER_ERROR).json({
             status: responseStatus.ERROR,
-            message: ErrorMessages.somethingWentWrongMessage
+            message: errorMessages.somethingWentWrongMessage
         });
     }
 };
 
 const handleJWTErrorDB = () =>
-    new AppError(ErrorMessages.invalidTokenMessage, responseStatusCode.UNAUTHORIZED);
+    new AppError(errorMessages.invalidTokenMessage, responseStatusCode.UNAUTHORIZED);
 
 const handleJWTExpiredErrorDB = () =>
-    new AppError(ErrorMessages.expiredTokenMessage, responseStatusCode.UNAUTHORIZED);
+    new AppError(errorMessages.expiredTokenMessage, responseStatusCode.UNAUTHORIZED);
 
 const handleCastErrorDB = (err) => {
-    const message = ErrorMessages.invalidMessage(err.path, err.value);
+    const message = errorMessages.invalidMessage(err.path, err.value);
 
     return new AppError(message, responseStatusCode.BAD_REQUEST);
 };
 
 const handleDuplicatedFieldsDB = (err) => {
     const value = err.errmsg.match(/(["'])(\\?.)*?\1/)[0];
-    const message = ErrorMessages.duplicatedFieldMessage(value);
+    const message = errorMessages.duplicatedFieldMessage(value);
 
     return new AppError(message, responseStatusCode.BAD_REQUEST);
 };
 
 const handleValidatorErrorDB = (err) => {
     const errors = Object.values(err.errors).map((el) => el.message);
-    const message = ErrorMessages.invalidIbputDataMessage(errors);
+    const message = errorMessages.invalidIbputDataMessage(errors);
 
     return new AppError(message, responseStatusCode.BAD_REQUEST);
 };

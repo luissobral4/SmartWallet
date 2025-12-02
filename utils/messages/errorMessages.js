@@ -22,6 +22,13 @@ const cantFindUrlMessage = (value) =>
 const invalidMessage = (path, value) =>
     `Invalid ${path}: ${value}`;
 
+const shuttingDownMessage = `Shutting down...`;
+
+const unhandledRejectionMessage = `UNHANDLED REJECTION! ${shuttingDownMessage}`;
+
+const unhandledExceptionMessage = `UNHANDLED EXCEPTION! ${shuttingDownMessage}`;
+
+
 module.exports = {
     somethingWentWrongMessage,
     invalidTokenMessage,
@@ -31,5 +38,7 @@ module.exports = {
     documentNotFoundMessage,
     tooManyRequestsMessage,
     cantFindUrlMessage,
-    invalidMessage
+    invalidMessage,
+    unhandledRejectionMessage,
+    unhandledExceptionMessage
 };
