@@ -1,9 +1,9 @@
-const status = Object.freeze({
+const responseStatus = Object.freeze({
     SUCCESS: 'success',
     FAIL: 'fail',
     ERROR: 'error'
 });
 
 module.exports = {
-  status
+  responseStatus
 };
