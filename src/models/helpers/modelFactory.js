@@ -1,9 +1,16 @@
 const mongoose = require('mongoose');
-const { nameDefinition, assetDetailsDefinitions, walletDetailsDefinitions } = require('./keysDefinitions');
+const { nameDefinition, assetDetailsDefinitions, walletDetailsDefinitions, transactionDetailsDefinitions } = require('./keysDefinitions');
 
 const schemaFactoryWithName = (object, schemaDefinition, schemaOptions) => {
     return schemaFactory({
         ...nameDefinition(object),
+        ...schemaDefinition
+    },schemaOptions);
+};
+
+const schemaFactoryWithTransactionDetails = (object, schemaDefinition, schemaOptions) => {
+    return schemaFactory({
+        ...transactionDetailsDefinitions(object),
         ...schemaDefinition
     },schemaOptions);
 };
@@ -36,6 +43,7 @@ const schemaFactory = (schemaDefinition, schemaOptions) => {
 module.exports = {
     schemaFactory,
     schemaFactoryWithName,
+    schemaFactoryWithTransactionDetails,
     schemaFactoryWithAssetDetails,
     schemaFactoryWithWalletDetails
 };

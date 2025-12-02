@@ -1,10 +1,10 @@
 const mongoose = require('mongoose');
-const { schemaFactoryWithAssetDetails } = require('./helpers/modelFactory');
-const validationMessages = require('../utils/validation/validationMessages');
-const { TRANSACTION_MODEL, ASSET_MODEL, USER_MODEL } = require('../constants/models');
-const { transactionFields } = require('../constants/fields');
+const { schemaFactoryWithTransactionDetails } = require('./helpers/modelFactory');
+const validationMessages = require('../utils/messages/validationMessages');
+const { TRANSACTION_MODEL, ASSET_MODEL, USER_MODEL } = require('./constants/models');
+const { transactionFields } = require('./constants/fields');
 
-const transactionSchema = schemaFactoryWithAssetDetails(
+const transactionSchema = schemaFactoryWithTransactionDetails(
     TRANSACTION_MODEL,
     {
         user: {

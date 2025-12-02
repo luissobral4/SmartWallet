@@ -2,11 +2,11 @@ FROM node:22-alpine as final
 
 WORKDIR /app
 
-COPY package*.json .
+COPY ./src/package*.json .
 
 RUN npm install --only=production
 
-COPY . .
+COPY ./src .
 
 EXPOSE 3000
 

@@ -60,8 +60,7 @@ const transactionFields = {
     //TYPE: 'type',
     OPEN_PRICE: commonPriceFields.OPEN_PRICE,
     NOMINAL_VALUE: commonValueFields.NOMINAL_VALUE,
-    ...commomProfitFields,
-    ...commonValueFields
+    ...commomProfitFields
 }
 
 const walletFields = {
