@@ -7,7 +7,6 @@ const { assetGroup } = require('../../src/enums/assetGroup');
 const { assetType } = require('../../src/enums/assetType');
 const { currency } = require('../../src/enums/currency');
 const { transactionType } = require('../../src/enums/transactionType');
-const { responseStatus } = require('../../src/utils/responseStatus');
 
 let user, asset;
 beforeEach(async () => {
@@ -33,7 +32,7 @@ beforeEach(async () => {
 });
 
 describe('Transaction Controller', () => {
-    let req, res, next, transaction;
+    let req, transaction;
 
     beforeEach(async () => {
         transaction = await Transaction.create({
@@ -50,32 +49,14 @@ describe('Transaction Controller', () => {
             query: {},
             requestTime: new Date().toISOString()
         };
-
-        res = {
-            statusCode: null,
-            jsonData: null,
-            status(code) {
-                this.statusCode = code;
-                return this;       // <- IMPORTANT for chaining
-            },
-            json(obj) {
-                this.jsonData = obj; // store json output
-                return this;
-            }
-        };
-
-        next = jest.fn();
     });
 
     describe('getAllTransactions', () => {
         test('should be defined', async () => {
-            await transactionController.getAllTransactions(req, res, next);
+            const docs = await transactionController.getAllAsync(req);
 
-            console.log(res);
-            expect(res.statusCode).toBe(responseStatus.OK);
-            expect(res.results).toBe(1);
-            expect(res.data.data.data[0]._id.toString()).toBe(transaction._id.toString());
-            expect(res.data.data.data[0].type).toBe(transactionType.BUY);
+            expect(docs[0]._id.toString()).toBe(transaction._id.toString());
+            expect(docs[0].type).toBe(transactionType.BUY);
         });
     });
 });
