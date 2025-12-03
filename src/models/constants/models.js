@@ -1,12 +1,12 @@
-const ASSET_MODEL = 'asset';
+const ASSET_MODEL = 'Asset';
 
-const ASSET_POSITION_MODEL = 'asset_position';
+const ASSET_POSITION_MODEL = 'Asset_position';
 
-const WALLET_MODEL = 'wallet';
+const WALLET_MODEL = 'Wallet';
 
-const USER_MODEL = 'user';
+const USER_MODEL = 'User';
 
-const TRANSACTION_MODEL = 'transaction';
+const TRANSACTION_MODEL = 'Transaction';
 
 module.exports = {
     ASSET_MODEL,

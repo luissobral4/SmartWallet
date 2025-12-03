@@ -2,9 +2,10 @@ const mongoose = require('mongoose');
 const validate = require('validator');
 const { schemaFactoryWithName } = require('./helpers/modelFactory');
 const { requiredMessage, provideValidMessage } = require('../utils/messages/validationMessages');
-const { ASSET_MODEL } = require('../constants/models');
-const { AssetGroup, AssetType } = require('../enums');
-const { assetFields } = require('../constants/fields');
+const { ASSET_MODEL } = require('./constants/models');
+const { assetGroup, assetType } = require('../enums');
+const { assetFields } = require('./constants/fields');
+const { currency } = require('../enums/currency');
 
 const assetSchema = schemaFactoryWithName(
     ASSET_MODEL,
@@ -21,17 +22,23 @@ const assetSchema = schemaFactoryWithName(
         currency: {
             type: String,
             required: [true, requiredMessage(ASSET_MODEL, assetFields.CURRENCY)],
-            validate: [validate.isCurrency, provideValidMessage(assetFields.CURRENCY)]
+            enum: Object.values(currency),
+            validate: {
+                validator: function (val) {
+                    return Object.values(currency).includes(val);
+                },
+                message: provideValidMessage(assetFields.CURRENCY)
+            }
         },
         group: {
             type: String,
             required: [true, requiredMessage(ASSET_MODEL, assetFields.GROUP)],
-            enum: AssetGroup,
+            enum: Object.values(assetGroup),
         },
         type: {
             type: String,
             required: [true, requiredMessage(ASSET_MODEL, assetFields.TYPE)],
-            enum: AssetType,
+            enum: Object.values(assetType),
         },
         price_history: {
             type: Map,

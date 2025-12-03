@@ -19,12 +19,12 @@ const nameDefinition = (model) => {
             type: String,
             required: [true, validationMessages.requiredMessage(model, commonDetailFields.NAME)],
             minLength: [
-                commonDetailLimits.NAME.MIN_LENGTH,
-                validationMessages.minLengthMessage(model, commonDetailFields.NAME, commonDetailLimits.NAME.MIN_LENGTH)
+                commonDetailLimits.name.MIN_LENGTH,
+                validationMessages.minLengthMessage(model, commonDetailFields.NAME, commonDetailLimits.name.MIN_LENGTH)
             ],
             maxLength: [
-                commonDetailLimits.NAME.MAX_LENGTH,
-                validationMessages.minLengthMessage(model, commonDetailFields.NAME, commonDetailLimits.NAME.MAX_LENGTH)
+                commonDetailLimits.name.MAX_LENGTH,
+                validationMessages.minLengthMessage(model, commonDetailFields.NAME, commonDetailLimits.name.MAX_LENGTH)
             ]
         }
     };
@@ -33,11 +33,11 @@ const nameDefinition = (model) => {
 const profitDefinitions = {
     profit: {
         type: Number,
-        default: commonProfitLimits.PROFIT.DEFAULT
+        default: commonProfitLimits.profit.DEFAULT
     },
     profit_percentage: {
         type: Number,
-        default: commonProfitLimits.PROFIT_PERCENTAGE.DEFAULT
+        default: commonProfitLimits.profit_percentage.DEFAULT
     }
 };
 
@@ -45,18 +45,18 @@ const valueDefinitions = (model) => {
     return {
         nominal_value: {
             type: Number,
-            required: [true, validationMessages.requiredMessage(model, commonValueFields.NOMINAL_VALUE)],
+            default: commonValueLimits.nominal_value.DEFAULT,
             min: [
-                commonValueLimits.NOMINAL_VALUE.MIN,
-                validationMessages.minMessage(model, commonValueFields.NOMINAL_VALUE, commonValueLimits.NOMINAL_VALUE.MIN)
+                commonValueLimits.nominal_value.MIN,
+                validationMessages.minMessage(model, commonValueFields.NOMINAL_VALUE, commonValueLimits.nominal_value.MIN)
             ]
         },
         market_value: {
             type: Number,
-            default: commonValueLimits.MARKET_VALUE.DEFAULT,
+            default: commonValueLimits.market_value.DEFAULT,
             min: [
-                commonValueLimits.MARKET_VALUE.MIN,
-                validationMessages.minMessage(model, commonValueFields.MARKET_VALUE, commonValueLimits.MARKET_VALUE.MIN)
+                commonValueLimits.market_value.MIN,
+                validationMessages.minMessage(model, commonValueFields.MARKET_VALUE, commonValueLimits.market_value.MIN)
             ]
         }
     }
@@ -68,16 +68,16 @@ const priceDefinitions = (model) => {
             type: Number,
             required: [true, validationMessages.requiredMessage(model, commonPriceFields.OPEN_PRICE)],
             min: [
-                commonPriceLimits.OPEN_PRICE.MIN,
-                validationMessages.minMessage(model, commonPriceFields.OPEN_PRICE, commonPriceLimits.OPEN_PRICE.MIN)
+                commonPriceLimits.open_price.MIN,
+                validationMessages.minMessage(model, commonPriceFields.OPEN_PRICE, commonPriceLimits.open_price.MIN)
             ]
         },
         market_price: {
             type: Number,
-            default: commonPriceLimits.MARKET_PRICE.DEFAULT,
+            default: commonPriceLimits.market_price.DEFAULT,
             min: [
-                commonPriceLimits.MARKET_PRICE.MIN,
-                validationMessages.minMessage(model, commonPriceFields.MARKET_PRICE, commonPriceLimits.MARKET_PRICE.MIN)
+                commonPriceLimits.market_price.MIN,
+                validationMessages.minMessage(model, commonPriceFields.MARKET_PRICE, commonPriceLimits.market_price.MIN)
             ]
         }
     }
@@ -89,8 +89,8 @@ const volumeDefinition = (model) => {
             type: Number,
             required: [true, validationMessages.requiredMessage(model, commonVolumeFields.VOLUME)],
             min: [
-                commonVolumeLimits.VOLUME.MIN,
-                validationMessages.minMessage(model, commonVolumeFields.VOLUME, commonVolumeLimits.VOLUME.MIN)
+                commonVolumeLimits.volume.MIN,
+                validationMessages.minMessage(model, commonVolumeFields.VOLUME, commonVolumeLimits.volume.MIN)
             ]
         }
     }

@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const { schemaFactoryWithAssetDetails } = require('./helpers/modelFactory');
 const validationMessages = require('../utils/messages/validationMessages');
-const { ASSET_POSITION_MODEL, ASSET_MODEL, TRANSACTION_MODEL } = require('../constants/models');
+const { ASSET_POSITION_MODEL, ASSET_MODEL, TRANSACTION_MODEL } = require('./constants/models');
 
 const assetPositionSchema = schemaFactoryWithAssetDetails(
     ASSET_POSITION_MODEL,

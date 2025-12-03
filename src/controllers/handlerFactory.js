@@ -39,6 +39,8 @@ const getAll = (Model) =>
 
         const docs = await features.query;
 
+        console.log(docs);
+
         res.status(responseStatusCode.OK).json({
             status: responseStatus.SUCCESS,
             requestedAt: req.requestTime,

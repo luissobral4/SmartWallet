@@ -1,51 +1,52 @@
 const commonDetailLimits = {
-  NAME: {
+  name: {
     MIN_LENGTH: 4,
-    MAX_LENGTH: 20,
+    MAX_LENGTH: 60,
   }
 }
 
 const commonProfitLimits = {
-  PROFIT: {
+  profit: {
     DEFAULT: 0
   },
-  PROFIT_PERCENTAGE: {
+  profit_percentage: {
     DEFAULT: 0
   }
 };
 
 const commonValueLimits = {
-  NOMINAL_VALUE: {
-    MIN: 0
+  nominal_value: {
+    MIN: 0,
+    DEFAULT: 0
   },
-  MARKET_VALUE: {
+  market_value: {
     MIN: 0,
     DEFAULT: 0
   }
 };
 
 const commonPriceLimits = {
-  OPEN_PRICE: {
+  open_price: {
     MIN: 0
   },
-  MARKET_PRICE: {
+  market_price: {
     DEFAULT: 0,
     MIN: 0
   },
 };
 
 const commonVolumeLimits = {
-  VOLUME: {
+  volume: {
     MIN: 0
   }
 };
 
 const userLimits = {
-  NAME: commonDetailLimits.NAME,
-  PASSWORD: {
+  name: commonDetailLimits.NAME,
+  password: {
     MIN_LENGTH: 8,
   },
-  AGE: {
+  age: {
     MIN: 12,
     MAX: 120,
   },

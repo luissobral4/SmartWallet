@@ -57,7 +57,7 @@ const transactionFields = {
     USER: 'user',
     ASSET: 'asset',
     DATE: 'date',
-    //TYPE: 'type',
+    TYPE: 'type',
     OPEN_PRICE: commonPriceFields.OPEN_PRICE,
     NOMINAL_VALUE: commonValueFields.NOMINAL_VALUE,
     ...commomProfitFields

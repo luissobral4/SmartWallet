@@ -3,6 +3,7 @@ const { schemaFactoryWithTransactionDetails } = require('./helpers/modelFactory'
 const validationMessages = require('../utils/messages/validationMessages');
 const { TRANSACTION_MODEL, ASSET_MODEL, USER_MODEL } = require('./constants/models');
 const { transactionFields } = require('./constants/fields');
+const { transactionType } = require('../enums/transactionType');
 
 const transactionSchema = schemaFactoryWithTransactionDetails(
     TRANSACTION_MODEL,
@@ -20,8 +21,12 @@ const transactionSchema = schemaFactoryWithTransactionDetails(
         date: {
             type: Date,
             required: [true, validationMessages.requiredMessage(TRANSACTION_MODEL, transactionFields.DATE)]
+        },
+        type: {
+            type: String,
+            required: [true, validationMessages.requiredMessage(TRANSACTION_MODEL, transactionFields.TYPE)],
+            enum: Object.values(transactionType)
         }
-        // type!! (BUY/SELL)
     }
 );
 

@@ -3,10 +3,10 @@ const validate = require('validator');
 const bcrypt = require('bcryptjs');
 const { schemaFactoryWithName } = require('./helpers/modelFactory');
 const validationMessages = require('../utils/messages/validationMessages');
-const { USER_MODEL, WALLET_MODEL } = require('../constants/models');
+const { USER_MODEL, WALLET_MODEL } = require('./constants/models');
 const { userRole } = require('../enums');
-const { userFields } = require('../constants/fields');
-const { userLimits } = require('../constants/limits');
+const { userFields } = require('./constants/fields');
+const { userLimits } = require('./constants/limits');
 
 const userSchema = schemaFactoryWithName(
     USER_MODEL,
@@ -21,8 +21,8 @@ const userSchema = schemaFactoryWithName(
         age: {
             type: Number,
             required: [true, validationMessages.requiredMessage(USER_MODEL, userFields.AGE)],
-            min: [userLimits.AGE.MIN, validationMessages.minMessage(USER_MODEL, userFields.AGE, userLimits.AGE.MIN)],
-            max: [userLimits.AGE.MAX, validationMessages.maxMessage(USER_MODEL, userFields.AGE, userLimits.AGE.MAX)]
+            min: [userLimits.age.MIN, validationMessages.minMessage(USER_MODEL, userFields.AGE, userLimits.age.MIN)],
+            max: [userLimits.age.MAX, validationMessages.maxMessage(USER_MODEL, userFields.AGE, userLimits.age.MAX)]
         },
         photo: {
             type: String,
@@ -30,15 +30,15 @@ const userSchema = schemaFactoryWithName(
         },
         role: {
             type: String,
-            enum: userRole,
+            enum: Object.values(userRole),
             default: userRole.USER
         },
         password: {
             type: String,
             required: [true, validationMessages.requiredMessage(USER_MODEL, userFields.PASSWORD)],
             minLength: [
-                userLimits.PASSWORD.MIN_LENGTH,
-                validationMessages.minLengthMessage(USER_MODEL, userFields.PASSWORD, userLimits.PASSWORD.MIN_LENGTH)
+                userLimits.password.MIN_LENGTH,
+                validationMessages.minLengthMessage(USER_MODEL, userFields.PASSWORD, userLimits.password.MIN_LENGTH)
             ],
             select: false
         },
@@ -56,7 +56,8 @@ const userSchema = schemaFactoryWithName(
         wallet: {
             type: mongoose.Schema.ObjectId,
             ref: WALLET_MODEL,
-            required: [true, validationMessages.mustBelongMessage(USER_MODEL, WALLET_MODEL)]
+            unique: true,
+            sparse: true
         },
         password_changed_at: Date,
         password_reset_token: String,
